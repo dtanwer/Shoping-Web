@@ -1,0 +1,23 @@
+.productDetail{
+    display: flex;
+    margin: 20px;
+}
+.buyingBtns{
+    text-align: center;
+}
+.buyingBtns button{
+    width: 15rem;
+    height: 5rem;
+    font-size: larger;
+    border: none;
+    color: white;
+    margin-right: 5rem;
+    margin-left: 5rem;
+}
+.buyingBtns .cartBtn{
+    background-color: rgb(255, 159, 0);
+}
+.buyingBtns .buyBtn{
+    background-color: rgb(251, 100, 27);
+    
+}

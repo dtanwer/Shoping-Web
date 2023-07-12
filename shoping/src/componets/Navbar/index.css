@@ -1,0 +1,61 @@
+.navBar{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: rgb(40, 116, 240);
+    color: #ffff;
+    gap: 3rem;
+}
+.leftNav{
+    display: flex;
+    gap:30px;
+    justify-content: flex-end;
+    align-items: center;
+}
+.leftNav .itemsearch form{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    width: 30rem;
+    height: 3.1rem;
+    border-radius: 5px;
+}
+.leftNav .itemsearch form .icon{
+    cursor: pointer;
+    font-size: 40px;
+    color: rgb(40, 116, 240);
+    padding-right: 10px;
+}
+.leftNav .itemsearch input{
+    border: none;
+    width: 100%;
+    border-radius: 5px;
+    height: 3rem;
+    padding-left: 20px;
+    font-size: larger;
+}
+.leftNav .itemsearch input:focus{
+    outline: none;
+    
+}
+.rightNav{
+    display: flex;
+    gap:5rem;
+    align-items: center;
+}
+.rightNav .item{
+    cursor: pointer;
+    display: flex;
+    gap:0.5rem;
+    font-size: 20px;
+    align-items: center;
+}
+.rightNav .item button{
+    cursor: pointer;
+    background-color: #ffff;
+    color: rgb(40, 116, 240);
+    border: none;
+    font-size: larger;
+    font-weight: bold;
+    padding: 0.5rem;
+    width: 10rem;
+}
