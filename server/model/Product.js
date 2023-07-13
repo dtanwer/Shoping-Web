@@ -8,12 +8,19 @@ const productSchma=new mongoose.Schema({
         type:String,
         require:true
     },
+    category:{
+        type:String,
+        require:true,
+    },
     rating:{
         type:String,
     },
     price:{
         type:String,
         required:true,
+    },
+    discountPercentage:{
+        type:String,
     },
     mrp:{
         type:String,

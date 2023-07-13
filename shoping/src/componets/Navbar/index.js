@@ -6,8 +6,9 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Auth from '../../pages/Auth';
 import { setLogOut } from '../../features/userSlice';
 import { useDispatch,useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
-
+    const navigate=useNavigate()
     const dispatch =useDispatch();
 
     const isLogin=useSelector((state)=>state.auth.login);
@@ -20,17 +21,17 @@ const Navbar = () => {
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
+    // const handleOk = () => {
+    //     setIsModalOpen(false);
+    // };
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
-    const handelLogin = () => {
+    // const handelLogin = () => {
 
-    }
+    // }
     const handelSearch = () => {
 
     }
@@ -39,7 +40,7 @@ const Navbar = () => {
             <div className='navBar'>
                 <div className="leftNav">
                     <div className="item">
-                        <h1>Flipkart</h1>
+                        <h1 onClick={()=>navigate('/')}>Flipkart</h1>
                     </div>
                     <div className="itemsearch">
                         <form onSubmit={handelSearch}>
@@ -49,13 +50,14 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="rightNav">
+                    
+                    <div className="item" onClick={()=>navigate('/')} >Home</div>
+                    <div className="item">DashBoard</div>
+                    {isLogin&&<div className="item"  onClick={()=>navigate('/cart')}> <ShoppingCartIcon /> Cart</div>}
                     {
                         !isLogin?<div className="item"> <button onClick={showModal}>Login</button>  </div> :
                         <div className="item"> <button onClick={()=>dispatch(setLogOut())}>Logout</button>  </div>
                     }
-                    
-                    <div className="item">DashBoard</div>
-                    <div className="item"> <ShoppingCartIcon /> Cart</div>
                 </div>
             </div>
             <Modal  width={1000} open={isModalOpen}  onCancel={handleCancel} footer={[]}>

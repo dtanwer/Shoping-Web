@@ -7,7 +7,7 @@ function CarouselProduct({ data }) {
         <div className='carousel'>
             <Carousel autoplay>
                 {
-                    data.map((item, i) => {
+                    data?.map((item, i) => {
                         return (
                             <div className='imgDiv'>
                                 <Image
@@ -24,7 +24,7 @@ function CarouselProduct({ data }) {
                 <div style={{ display: 'none' }}>
                     <Image.PreviewGroup preview={{ visible, onVisibleChange: (vis) => setVisible(vis) }}>
                         {
-                             data.map((item, i) => {
+                             data?.map((item, i) => {
                                 return (
                                     <Image src={item} />
                                 )

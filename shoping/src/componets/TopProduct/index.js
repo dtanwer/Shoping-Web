@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import ProductCard1 from '../productCard1'
 import './index.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { setProducts } from '../../features/userSlice'
+import { getProductsForUsers } from '../../services/product.service'
 
-function TopProduct() {
+const TopProduct = () => {
+    const dispatch = useDispatch();
+    const products=useSelector((state)=>state.auth.products)
+
+    const getTopProducts = async () => {
+        try {
+            const res = await getProductsForUsers();
+            dispatch(setProducts(res.data))
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        getTopProducts();
+    }, [])
     const data = [
         {
             "id": 1,
@@ -99,9 +117,9 @@ function TopProduct() {
     return (
         <div className='topProduct' >
             {
-                data.map((item,i)=>{
-                    return(
-                       <ProductCard1 data={item} key={i}/> 
+                products.map((item, i) => {
+                    return (
+                        <ProductCard1 data={item} key={i} />
                     )
                 })
             }

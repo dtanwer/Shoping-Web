@@ -41,3 +41,23 @@ export const checkUser= async (req, res)=>{
     const user = await clientModel.findOne({ email });
     return res.status(200).json(user);
 }
+export const addToCart= async (req, res)=>{
+    const id=req.params.id;
+    const user = await clientModel.updateOne({_id:id},{ $push: { cart: req.body }});
+    return res.status(200).json(user);
+}
+export const removeToCart= async (req, res)=>{
+    const id=req.params.id;
+    const user = await clientModel.updateOne({_id:id},{ $pull: { cart: req.body }});
+    return res.status(200).json(user);
+}
+export const addAddress= async (req, res)=>{
+    const id=req.params.id;
+    const user = await clientModel.updateOne({_id:id},{ $push: { address: req.body }});
+    return res.status(200).json(user);
+}
+export const removeAddress= async (req, res)=>{
+    const id=req.params.id;
+    const user = await clientModel.updateOne({_id:id},{ $pull: { address: req.body }});
+    return res.status(200).json(user);
+}

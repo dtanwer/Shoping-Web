@@ -15,16 +15,19 @@ const ClientSchma = new mongoose.Schema({
     type: {
         type: String,
     },
-    address: {
-        type: String
-    },
+    address: [
+        {
+            type:Object
+        }
+    ],
     password: {
         type: String,
     },
     isActive:{
         type:Boolean,
         default:true
-    }
+    },
+    cart:[]
 },
     { timestamps: true }
 )

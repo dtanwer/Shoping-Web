@@ -11,6 +11,9 @@
     justify-content: flex-end;
     align-items: center;
 }
+.leftNav .item h1{
+    cursor: pointer;
+}
 .leftNav .itemsearch form{
     display: flex;
     align-items: center;
