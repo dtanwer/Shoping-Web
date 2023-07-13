@@ -52,7 +52,7 @@ const Navbar = () => {
                 <div className="rightNav">
                     
                     <div className="item" onClick={()=>navigate('/')} >Home</div>
-                    <div className="item">DashBoard</div>
+                    <div className="item" onClick={()=>navigate('/dashboard')}>DashBoard</div>
                     {isLogin&&<div className="item"  onClick={()=>navigate('/cart')}> <ShoppingCartIcon /> Cart</div>}
                     {
                         !isLogin?<div className="item"> <button onClick={showModal}>Login</button>  </div> :

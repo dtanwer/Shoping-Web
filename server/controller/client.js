@@ -51,6 +51,16 @@ export const removeToCart= async (req, res)=>{
     const user = await clientModel.updateOne({_id:id},{ $pull: { cart: req.body }});
     return res.status(200).json(user);
 }
+export const disableClient= async (req, res)=>{
+    const id=req.params.id;
+    const user = await clientModel.updateOne({_id:id},{ isActive:false});
+    return res.status(200).json(user);
+}
+export const updateClient= async (req, res)=>{
+    const id=req.params.id;
+    const user = await clientModel.findByIdAndUpdate(id,req.body,{new:true});
+    return res.status(200).json(user);
+}
 export const addAddress= async (req, res)=>{
     const id=req.params.id;
     const user = await clientModel.updateOne({_id:id},{ $push: { address: req.body }});
