@@ -6,6 +6,7 @@ import Product from './pages/product';
 import Cart from './pages/Cart';
 import Protected from './componets/protected';
 import DashBoard from './pages/DashBoard';
+import OderSuccess from './pages/orderSuccess';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/product/:id' element={<Product/>}/>
         <Route path='/cart' element={<Protected><Cart/></Protected>}/>
         <Route path='/dashboard' element={<Protected><DashBoard/></Protected>}/>
+        <Route path='/success' element={<Protected><OderSuccess/></Protected>}/>
         </Route>
       </Routes>
       </BrowserRouter>

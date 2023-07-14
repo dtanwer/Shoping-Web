@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Modal } from 'antd';
+import { Modal } from 'antd';
 import './index.css'
 import ProductForm from '../../componets/productForm';
 import ViewOrders from '../../componets/viewOrders';

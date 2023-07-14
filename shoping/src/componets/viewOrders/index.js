@@ -1,13 +1,21 @@
-import React from 'react'
+import {useEffect,useState} from 'react'
 import './index.css'
-import { Space, Table, Tag } from 'antd';
+import { Space, Table } from 'antd';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
+import { getOrders } from '../../services/product.service';
 const columns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    title: 'User Name',
+    dataIndex: 'userName',
+    key: 'userName',
+    render: (text) => <span>{text}</span>,
+  },
+  {
+    title: 'Product',
+    dataIndex: 'productName',
+    key: 'productName',
+    render: (text) => <span>{text}</span>,
   },
   {
     title: 'Date',
@@ -36,33 +44,49 @@ const columns = [
     ),
   },
 ];
-const data = [
-  {
-    name: 'John Brown',
-    quantity: 32,
-    address: 'New York No. 1 Lake Park',
-    date: '2023-07-12T19:12:06.070+00:00',
-  },
-  {
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    date: '2023-07-12T19:12:06.070+00:00',
-  },
-  {
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-  {
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  }
-];
+// const data = [
+//   {
+//     name: 'John Brown',
+//     quantity: 32,
+//     address: 'New York No. 1 Lake Park',
+//     date: '2023-07-12T19:12:06.070+00:00',
+//   },
+//   {
+//     name: 'Jim Green',
+//     age: 42,
+//     address: 'London No. 1 Lake Park',
+//     date: '2023-07-12T19:12:06.070+00:00',
+//   },
+//   {
+//     name: 'Joe Black',
+//     age: 32,
+//     address: 'Sydney No. 1 Lake Park',
+//     tags: ['cool', 'teacher'],
+//   },
+//   {
+//     name: 'John Brown',
+//     age: 32,
+//     address: 'New York No. 1 Lake Park',
+//     tags: ['nice', 'developer'],
+//   }
+// ];
 const ViewOrders = () => {
+
+  const user = useSelector((state) => state.auth.user);
+  const [data, setData] = useState([]);
+
+  const getOrdersForVender = async () => {
+    try {
+      const res = await getOrders(user._id);
+      console.log(res.data)
+      setData(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  useEffect(() => {
+    getOrdersForVender()
+  }, [])
   return (
     <div className='viewOrders'>
       <Table columns={columns} dataSource={data} />

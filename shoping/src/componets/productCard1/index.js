@@ -4,7 +4,7 @@ import Rate from '../../assets/Rating'
 import { useNavigate } from 'react-router-dom'
 
 function ProductCard1({data}) {
-    console.log(data)
+    // console.log(data)
     const navigate=useNavigate();
     const handelOpenProduct=()=>{
       navigate(`/product/${data._id}`)

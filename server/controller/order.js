@@ -3,7 +3,7 @@ import {orderModel} from '../model/Order.js'
 export const getOrders=async (req,res)=>{
     const id=req.params.id;
     try {
-        const resp=await  orderModel.find({owner:id})
+        const resp=await  orderModel.find({vendorId:id})
         res.status(200).json(resp)
     } catch (error) {
         console.log(error)
