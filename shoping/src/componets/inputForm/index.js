@@ -15,6 +15,11 @@ const InputForm = ({ images }) => {
     };
     const [form] = Form.useForm();
     const onFinish = async (values) => {
+        if(images.length<3)
+        {
+            alert("Input altest 3 images of Products");
+            return;
+        }
 
         try {
             const res = await addProduct({ ...values, images, img: images[0], vendorId: user._id, isDraft })

@@ -5,6 +5,9 @@ import multer from 'multer'
 import clientRouter from './router/client.js'
 import productRouter from './router/product.js'
 import orderRouter from './router/order.js'
+import path from 'path'
+import * as url from 'url';
+const app = express();
 const storage = multer.diskStorage({
     destination:'./uploads/',
       // Specify the destination folder where uploaded files will be saved
@@ -13,8 +16,9 @@ const storage = multer.diskStorage({
     }   
 });
 const upload = multer({ storage });
-
-const app = express();
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+app.use(express.static(path.join(__dirname,"/uploads")))
 app.use(express.json());
 app.use(cors());
 app.get('/', (req, res) => {
