@@ -4,8 +4,9 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Upload } from 'antd';
 import InputForm from '../inputForm';
 
-const ProductForm = () => {
-    const [image, setImage] = useState([]);
+const ProductForm = ({data,update}) => {
+    const [image, setImage] = useState(update?data.images:[]);
+    // console.log("img",image)
     const [fileList, setFileList] = useState([]);
     const handleChange = ({ file: newFile, fileList: newFileList }) => {
         setFileList(newFileList);
@@ -35,7 +36,7 @@ const ProductForm = () => {
             >
                 {fileList.length >= 4 ? null : uploadButton}
             </Upload>
-            <InputForm images={image}/>
+            <InputForm images={image} data={data} update={update}/>
         </div>
     )
 }

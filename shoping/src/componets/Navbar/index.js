@@ -21,17 +21,9 @@ const Navbar = () => {
         setIsModalOpen(true);
     };
 
-    // const handleOk = () => {
-    //     setIsModalOpen(false);
-    // };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
-    // const handelLogin = () => {
-
-    // }
     const handelSearch = () => {
 
     }
@@ -53,7 +45,7 @@ const Navbar = () => {
                     
                     <div className="item" onClick={()=>navigate('/')} >Home</div>
                     {
-                        user.type!=='user' &&  <div className="item" onClick={()=>navigate('/dashboard')}>DashBoard</div>
+                        user.type!=='user'&& isLogin &&  <div className="item" onClick={()=>navigate('/dashboard')}>DashBoard</div>
                     }
                    
                     {isLogin&&<div className="item"  onClick={()=>navigate('/cart')}> <ShoppingCartIcon /> Cart</div>}
@@ -61,6 +53,7 @@ const Navbar = () => {
                         !isLogin?<div className="item"> <button onClick={showModal}>Login</button>  </div> :
                         <div className="item"> <button onClick={()=>dispatch(setLogOut())}>Logout</button>  </div>
                     }
+                    {isLogin&& <div className="item" onClick={()=>navigate('/profile')}>  <img src={user.img??"https://img.freepik.com/free-icon/user_318-159711.jpg"} alt="no icon" /> </div>}
                 </div>
             </div>
             <Modal  width={1000} open={isModalOpen}  onCancel={handleCancel} footer={[]}>

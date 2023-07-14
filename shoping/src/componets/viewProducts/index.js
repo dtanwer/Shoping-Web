@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import ProductForm from '../productForm/index.js';
 
 const ViewProducts = () => {
+  const [rec, setRecord] = useState({});
   const columns = [
     {
       title: 'Name',
@@ -37,7 +38,7 @@ const ViewProducts = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <a onClick={()=>handelEdit(record)}>Edit {record.title}</a>
+          {record.isDraft&&<a onClick={()=>handelEdit(record)}>Edit {record.title}</a>}
           <a>Delete</a>
         </Space>
       ),
@@ -46,7 +47,7 @@ const ViewProducts = () => {
   const user = useSelector((state) => state.auth.user);
   const [data, setData] = useState([]);
   const [draftData, setdraftData] = useState([]);
-  const [show, setShow] = useState(false);
+
   const [modalOpen, setModalOpen] = useState(false);
   const getproductsForVender = async () => {
     try {
@@ -88,7 +89,8 @@ const ViewProducts = () => {
   ];
 
   const handelEdit=(record)=>{
-    console.log(record)
+    // console.log(record)
+    setRecord(record);
     setModalOpen(true)
   }
 
@@ -109,7 +111,7 @@ const ViewProducts = () => {
                 onOk={() => setModalOpen(false)}
                 onCancel={() => setModalOpen(false)}
             >
-              <ProductForm />
+              <ProductForm data={rec} update={true} />
             </Modal>
       </div>
   )
