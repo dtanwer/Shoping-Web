@@ -17,6 +17,7 @@ const Login = ({ setlogin, handleCancel }) => {
     const [type, setType] = useState('')
     const [isNum, setNum] = useState(false);
     const [open, setOpen] = useState(false);
+    const [responce, setResponce] = useState({});
 
     const dispatch = useDispatch();
 
@@ -52,10 +53,10 @@ const Login = ({ setlogin, handleCancel }) => {
     const handelOnClickGoogle = async () => {
         try {
             const res = await signInWithGoogle();
+            setResponce(res);
             const user = await checkUser({ email: res._tokenResponse?.email })
             if (!user.data) {
-                const user = await signUpUser({ email: res?._tokenResponse?.email, type, name: res?._tokenResponse?.displayName, img: res?._tokenResponse?.photoUrl });
-                dispatch(setLogin(user?.data))
+                showModal()
             }
             else {
                 dispatch(setLogin(user?.data));
@@ -68,8 +69,13 @@ const Login = ({ setlogin, handleCancel }) => {
         handleCancel();
     }
 
-    const handelClickType = (userType) => {
-        setType(userType);
+    const handelClickType = async (userType) => {
+        try {
+            const user = await signUpUser({ email: responce?._tokenResponse?.email, type:userType, name: responce?._tokenResponse?.displayName, img: responce?._tokenResponse?.photoUrl });
+            dispatch(setLogin(user?.data))
+        } catch (error) {
+            console.log(error)
+        }
         hideModal();
         handelOnClickGoogle();
     }
@@ -102,7 +108,7 @@ const Login = ({ setlogin, handleCancel }) => {
                 <p>Don't have Account ?<span onClick={() => setlogin(false)} > Register</span></p>
                 <span className='smallHeading' >Or, Sign in with your Google account</span>
             </div>
-            <div className="btns" onClick={showModal}>
+            <div className="btns" onClick={handelOnClickGoogle}>
                 <img src="http://uitheme.net/sociala/images/icon-1.png" alt="" />
                 <button >Sign in with Google</button>
             </div>
@@ -112,8 +118,8 @@ const Login = ({ setlogin, handleCancel }) => {
                 open={open}
                 onOk={() => handelClickType("vendor")}
                 onCancel={() => handelClickType("user")}
-                okText="User"
-                cancelText="Vendor"
+                okText="Vendor"
+                cancelText="user"
                 closeIcon={false}
             >
                 <h3>What Type of Account You want</h3>

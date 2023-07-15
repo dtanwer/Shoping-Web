@@ -1,12 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './index.css'
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, Form, Input, message, Select, Checkbox } from 'antd';
-import { addProduct } from '../../services/product.service';
+import { addProduct, updateMyProduct } from '../../services/product.service';
 import { useSelector } from 'react-redux'
 const { Option } = Select;
 const { TextArea } = Input;
-const InputForm = ({ images }) => {
+const InputForm = ({ images,data,update }) => {
     const [messageApi, contextHolder] = message.useMessage();
     const user = useSelector((state) => state.auth.user)
     const [isDraft, setDraft] = useState(false);
@@ -20,14 +20,28 @@ const InputForm = ({ images }) => {
             alert("Input altest 3 images of Products");
             return;
         }
+        if(update)
+        {
+            try {
+                const res = await updateMyProduct({ ...values, images, isDraft },data._id)
+                info()
+                onReset();
+                // console.log(res.data);
+            } catch (error) {
+                console.log(error)
+            }
+        }
+        else
+        {
 
-        try {
-            const res = await addProduct({ ...values, images, img: images[0], vendorId: user._id, isDraft })
-            info()
-            onReset();
-            console.log(res.data);
-        } catch (error) {
-            console.log(error)
+            try {
+                const res = await addProduct({ ...values, images, img: images[0], vendorId: user._id, isDraft })
+                info()
+                onReset();
+                console.log(res.data);
+            } catch (error) {
+                console.log(error)
+            }
         }
         console.log(values);
 
@@ -36,10 +50,7 @@ const InputForm = ({ images }) => {
         form.resetFields();
     };
     const onFill = () => {
-        form.setFieldsValue({
-            note: 'Hello world!',
-            gender: 'male',
-        });
+        form.setFieldsValue(data);
     };
     const tailLayout = {
         wrapperCol: {
@@ -64,6 +75,14 @@ const InputForm = ({ images }) => {
             sm: { span: 20, offset: 4 },
         },
     };
+
+    useEffect(()=>{
+        console.log(data)
+        if(update)
+        {
+            onFill()
+        }
+    },[])
     return (
         <div className='inputForm'>
             {contextHolder}
