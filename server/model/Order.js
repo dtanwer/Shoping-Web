@@ -8,7 +8,11 @@ const orderSchma = new mongoose.Schema({
         type: String,
         require: true
     },
-    name: {
+    productName: {
+        type: String,
+        require: true
+    },
+    userName: {
         type: String,
         require: true
     },

@@ -46,18 +46,18 @@ export const getProducts= async (req,res)=>{
     }
 }
 export const getProductsByOwner= async (req,res)=>{
-    const ownerId=req.params.vendorId;
+    const vendorId=req.params.vendorId;
     try {
-        const resp= await productModel.find({ownerId,isDraft:false})
+        const resp= await productModel.find({vendorId,isDraft:false})
         res.status(200).json(resp)
     } catch (error) {
         return res.status(400).json(error);
     }
 }
 export const getDraftProductsWithOwner= async (req,res)=>{
-    const ownerId=req.params.vendorId;
+    const vendorId=req.params.vendorId;
     try {
-        const resp= await productModel.find({ownerId,isDraft:true})
+        const resp= await productModel.find({vendorId,isDraft:true})
         res.status(200).json(resp)
     } catch (error) {
         console.log(error)
