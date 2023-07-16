@@ -28,6 +28,15 @@ export const getProduct= async (req,res)=>{
         console.log(error)
     }
 }
+export const getProductsByCategory= async (req,res)=>{
+    const category=req.params.name;
+    try {
+        const resp= await productModel.find({category})
+        res.status(200).json(resp)
+    } catch (error) {
+        console.log(error)
+    }
+}
 export const deleteProduct= async (req,res)=>{
     const id=req.params.id;
     try {

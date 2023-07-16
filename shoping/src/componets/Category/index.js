@@ -4,6 +4,10 @@ import CategoryCard from '../categoryCard';
 const Category = () => {
     const data = [
         {
+            name: "All",
+            img: "https://www.love-electronics.com/wp-content/uploads/2021/03/Banner-1.jpg"
+        },
+        {
             name: "Mobile",
             img: "https://rukminim2.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100"
         },

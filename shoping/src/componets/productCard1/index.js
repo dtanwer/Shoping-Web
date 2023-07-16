@@ -4,7 +4,6 @@ import Rate from '../../assets/Rating'
 import { useNavigate } from 'react-router-dom'
 
 function ProductCard1({data}) {
-    // console.log(data)
     const navigate=useNavigate();
     const handelOpenProduct=()=>{
       navigate(`/product/${data._id}`)
@@ -19,7 +18,9 @@ function ProductCard1({data}) {
             <span>{data.brand}</span>
             <div className="productRating">
             <Rate data={data.rating}/>
+            {data.stock==='0'&& <span className='outofStock'>Out Of Stock</span>}
             </div>
+
             <span className='price'>₹ {data.price} <span className='MRP'>{data.mrp}</span></span> <span className='discount'>{data.discountPercentage}%</span>
         </div>
     </div>

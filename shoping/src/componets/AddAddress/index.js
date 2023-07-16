@@ -31,7 +31,7 @@ function AddAddress({isModalOpen1,setIsModalOpen1,setSelectedAddress}) {
                     })
                 }
             </ul>
-        </Modal>
+     </Modal>
     )
 }
 

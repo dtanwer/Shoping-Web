@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import { toast, Toaster } from "react-hot-toast";
@@ -9,12 +9,11 @@ import { loginUser, signUpUser } from '../../services/auth.service';
 import './index.css';
 import { checkUser } from '../../services/auth.service';
 
-import { Button, Modal, Space } from 'antd';
+import { Modal } from 'antd';
 const Login = ({ setlogin, handleCancel }) => {
-    const [emailError, setEmailError] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [type, setType] = useState('')
+    const [msg, setMsg] = useState("");
     const [isNum, setNum] = useState(false);
     const [open, setOpen] = useState(false);
     const [responce, setResponce] = useState({});
@@ -41,10 +40,27 @@ const Login = ({ setlogin, handleCancel }) => {
         try {
             const res = await loginUser({ email, password })
             // console.log(res.data,"with id password")
-            dispatch(setLogin(res.data));
-            handleCancel();
+            if (res.status === 200) {
+                dispatch(setLogin(res.data));
+                setEmail("");
+                setPassword("");
+                setMsg("");
+                handleCancel();
+
+            }
+            else if (res.status === 204) {
+                setMsg("Invalid Emial or Phone number !!")
+                setPassword("");
+                setEmail("");
+            }
+            else{
+                setMsg("User Block By Admin!!");
+            }
+
 
         } catch (error) {
+            setMsg("Wrong Password!!!")
+            setPassword("");
             console.log(error);
         }
 
@@ -71,7 +87,7 @@ const Login = ({ setlogin, handleCancel }) => {
 
     const handelClickType = async (userType) => {
         try {
-            const user = await signUpUser({ email: responce?._tokenResponse?.email, type:userType, name: responce?._tokenResponse?.displayName, img: responce?._tokenResponse?.photoUrl });
+            const user = await signUpUser({ email: responce?._tokenResponse?.email, type: userType, name: responce?._tokenResponse?.displayName, img: responce?._tokenResponse?.photoUrl });
             dispatch(setLogin(user?.data))
         } catch (error) {
             console.log(error)
@@ -91,12 +107,12 @@ const Login = ({ setlogin, handleCancel }) => {
                     <div className="email myInput">
                         <MailOutlineIcon className='icon' />
                         <input type="text" value={email} onChange={handelOnChange} maxLength={isNum ? 10 : 20} placeholder=' Enter Email/Mobile number' required />
-                        <span style={{ fontWeight: 'bold', color: 'red' }}>{emailError}</span>
                     </div>
                     <div className="password myInput">
                         <LockOpenIcon className='icon' />
                         <input type="password" placeholder=' Password' value={password} onChange={(e) => setPassword(e.target.value)} required />
                     </div>
+                    <div style={{ color: "red", fontWeight: 'bold' }} ><span>{msg}</span></div>
                     <div className="submitBtn">
                         <button type="submit">Login</button>
                     </div>

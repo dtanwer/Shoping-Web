@@ -27,6 +27,14 @@ const orderSchma = new mongoose.Schema({
     quantity: {
         type: String,
         required: true,
+    },
+    status:{
+        type:String,
+        default:"ordered"
+    },
+    price:{
+        type:String,
+        required:true,
     }
 },
     { timestamps: true }

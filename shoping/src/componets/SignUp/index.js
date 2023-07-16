@@ -5,27 +5,71 @@ import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import { Radio } from 'antd';
 import './index.css'
 import { signUpUser } from '../../services/auth.service';
+import { message } from 'antd';
 const SignUp = ({ setlogin }) => {
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [type, setType] = useState("user");
+  const [messageApi, contextHolder] = message.useMessage();
 
- 
-  const handelSubmit=async (e)=>{
+  const success = () => {
+    messageApi.open({
+      type: 'success',
+      content: 'Registration Successful',
+      style: {
+        marginTop: '20vh',
+      },
+    });
+  };
+
+  const error = (msg) => {
+    messageApi.open({
+      type: 'error',
+      content: msg,
+      style: {
+        marginTop: '20vh',
+        fontSize: '20px',
+        marginLeft: "15rem"
+      },
+    });
+  };
+
+
+  const handelSubmit = async (e) => {
     e.preventDefault();
-    try {
-      
-      await signUpUser({phone,email,type,password});
-      setlogin(true);
-    } catch (error) {
-      console.log(error);
+    if (password === confirmPassword) {
+      if(phone.length!==10)
+      {
+        error("Phone number length Should be 10");
+        return;
+      }
+
+      try {
+        const res = await signUpUser({ phone, email, type, password });
+        if (res.status === 209) {
+          error('Email Alredy Exist!!');
+        }
+        else {
+          success();
+          setlogin(true);
+        }
+      } catch (error) {
+        error("Unable to Register  Right Now!!");
+        console.log(error);
+      }
+    }
+    else{
+      setConfirmPassword("");
+      error("Confir Password Did not Match !")
     }
   }
 
+
   return (
     <div className='login'>
+      {contextHolder}
       <div className="inputBox">
         <form onSubmit={handelSubmit} >
           <div className="email myInput">
@@ -44,7 +88,7 @@ const SignUp = ({ setlogin }) => {
             <LockOpenIcon className='icon' />
             <input type="password" placeholder=' Confirm Password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
           </div>
-          <Radio.Group onChange={(e)=>setType(e.target.value)} value={type}>
+          <Radio.Group onChange={(e) => setType(e.target.value)} value={type}>
             <Radio value='user'>User</Radio>
             <Radio value='vendor'>Vendor</Radio>
           </Radio.Group>

@@ -3,6 +3,10 @@ export const addProduct=  (data)=>axios.post('http://localhost:5000/product/add'
 export const getProducts= (id)=>axios.get(`http://localhost:5000/product/vendor/${id}`);
 export const getProduct= (id)=>axios.get(`http://localhost:5000/product/${id}`);
 export const getProductsForUsers= ()=>axios.get(`http://localhost:5000/product`);
+export const getProductsByCategory= (name)=>axios.get(`http://localhost:5000/product/category/${name}`);
+export const getOrdersForUser= (id)=>axios.get(`http://localhost:5000/order/user/${id}`);
+export const getAllOrders= (id)=>axios.get(`http://localhost:5000/order`);
+export const updateOrder= (id,data)=>axios.put(`http://localhost:5000/order/${id}`,data);
 export const getDraftProducts= (id)=>axios.get(`http://localhost:5000/product/vendorDraft/${id}`);
 export const deleteProduct= (id)=>axios.delete(`http://localhost:5000/product/${id}`);
 export const updateMyProduct= (data,id)=>axios.put(`http://localhost:5000/product/${id}`,data);

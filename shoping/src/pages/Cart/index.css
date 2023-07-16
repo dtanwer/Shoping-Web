@@ -22,8 +22,8 @@
 }
 .cart .amountDetails{
     background-color: #ffff;
-    width: 30rem;
-    height: 30rem;
+    /* width: 30rem; */
+    height: fit-content;
     margin-right: 4rem;
     margin-top: 2rem;
 }
@@ -46,6 +46,18 @@
     padding: 1rem;
     border: none;
     border-radius: 10px;
+}
+.checkout button{
+    width: 22rem;
+    cursor: pointer;
+    margin: 15px;
+    background-color: rgb(251, 100, 27);
+    color: white;
+    font-size: large;
+    padding: 1rem;
+    border: none;
+    border-radius: 10px;
+    margin-top: 40px;
 }
 .addressButton{
     text-align: end;
@@ -83,4 +95,53 @@
 .address .content .selectedAddress{
     margin: 20px;
     width: 65%;
+}
+.amountDetails{
+    padding: 50px;
+}
+
+.amountDetails .details span,.amountDetails .total{
+    font-size: 25px;
+}
+.amountDetails .details{
+    margin-top: 20px;
+    line-height: 60px;
+}
+.amountDetails .priceHead{
+    border-bottom: 1px solid gray;
+}
+.amount{
+    margin-left: 150px;
+}
+
+.amountDetails .total{
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid gray;
+}
+
+.cupon input{
+    width: 270px;
+    margin-right: 20px;
+    margin-top: 50px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: larger;
+}
+.cupon button{
+    padding: 10px;
+    font-size: larger;
+    color: #ffff;
+    background-color: rgb(40, 116, 240);
+    border: none;
+    border-radius: 5px;
+}
+.itemsBuy{
+    width: 70%;
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: #ffff;
+    margin: 2rem;
+    margin-left: 7rem;
 }

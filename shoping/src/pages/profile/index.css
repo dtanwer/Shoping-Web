@@ -66,3 +66,13 @@
     height: 70px;
     border-radius: 100%;
 }
+.changeImg{
+    margin-top: 20px;
+    background-color: rgb(40, 116, 240);
+    color: #ffff;
+    font-size: 18px;
+    padding: 8px;
+    border-radius: 5px;
+    border: none;
+
+}

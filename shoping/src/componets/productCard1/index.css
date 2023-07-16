@@ -23,6 +23,11 @@
 .productCard1 .productRating{
     margin: 10px;
 }
+.outofStock{
+    font-size: 25px;
+    font-weight: bold;
+    color: red;
+}
 .productCard1 .content .name{
     font-weight: bold;
     font-size: 1.2rem;

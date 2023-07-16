@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState={
     login:false,
     user:{},
-    products:[]
+    products:[],
+    totalInCart:0,
+    productPrice:0,
 }
 
 const authSlice=createSlice({
@@ -38,9 +40,15 @@ const authSlice=createSlice({
         setProducts:(state,action)=>{
             state.products=action.payload;
         },
+        setTotalCart:(state,action)=>{
+            state.totalInCart+=action.payload;
+        },
+        setProductPrice:(state,action)=>{
+            state.productPrice=action.payload;
+        },
         
     }
 })
 
-export const {setLogOut,setLogin,setUser,setProducts,setAddCart,setAddress,removeUserCart} = authSlice.actions;
+export const {setLogOut,setLogin,setUser,setProducts,setAddCart,setAddress,removeUserCart,setTotalCart,setProductPrice} = authSlice.actions;
 export default authSlice.reducer;

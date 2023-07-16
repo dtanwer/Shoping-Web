@@ -43,6 +43,10 @@ const productSchma=new mongoose.Schema({
         type:Boolean,
         required:true,
     },
+    isDelete:{
+        type:Boolean,
+        default:false
+    },
     images:[],
     highlights:[],
     offers:[],

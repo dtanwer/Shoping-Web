@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import './index.js';
-import { Space, Table,Modal } from 'antd';
+import './index.css';
+import { Space, Table, Modal, message } from 'antd';
 import moment from 'moment';
 import { Tabs } from 'antd';
-import { getDraftProducts, getProducts } from '../../services/product.service.js';
+import { getDraftProducts, getProducts, getProductsForUsers, updateMyProduct } from '../../services/product.service.js';
 import { useSelector } from 'react-redux';
 import ProductForm from '../productForm/index.js';
 
+
 const ViewProducts = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [rec, setRecord] = useState({});
   const columns = [
     {
@@ -20,7 +22,7 @@ const ViewProducts = () => {
       title: 'Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      render: (date) => <span>{moment(date).format("dddd, MMMM Do YYYY, h:mm:ss a")}</span>,
+      render: (date) => <span>{moment(date).format("dddd, MMMM Do YYYY, h:mm a")}</span>,
     },
     {
       title: 'Stock',
@@ -38,8 +40,17 @@ const ViewProducts = () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          {record.isDraft&&<a onClick={()=>handelEdit(record)}>Edit {record.title}</a>}
-          <a>Delete</a>
+          {record?.isDraft && <a onClick={() => handelEdit(record)}>Edit {record.title}</a>}
+          {
+            record?.isDelete ?
+            <a style={{'color':"gray" ,"cursor":"not-allowed"}}>Make Stock Out</a>:
+            <a onClick={() => setOutOfStock(record._id)}  className='deleted'>Make Stock Out</a>
+          }
+          {
+            record?.isDelete ?
+            <a style={{'color':"gray" ,"cursor":"not-allowed"}}>Delete</a>:
+            <a onClick={() => setDeleteProduct(record._id)} >Delete</a>
+          }
         </Space>
       ),
     },
@@ -47,12 +58,13 @@ const ViewProducts = () => {
   const user = useSelector((state) => state.auth.user);
   const [data, setData] = useState([]);
   const [draftData, setdraftData] = useState([]);
+  const [isChange, setChange] = useState(false);
 
   const [modalOpen, setModalOpen] = useState(false);
   const getproductsForVender = async () => {
     try {
-      const res = await getProducts(user._id);
-      console.log(res.data)
+      const res = user.type==='admin'?await getProductsForUsers() : await getProducts(user._id);
+      // console.log(res.data)
       setData(res.data)
     } catch (error) {
       console.log(error)
@@ -60,9 +72,28 @@ const ViewProducts = () => {
   }
   const getDraftproductsForVender = async () => {
     try {
-      const res = await getDraftProducts(user._id);
+      const res = await getDraftProducts(user?._id);
       console.log(res.data)
       setdraftData(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const setOutOfStock = async (id) => {
+    try {
+      const res = await updateMyProduct({ stock: "0" },id)
+      setChange(!isChange);
+      info("Now Product is OUT OF STOCK !")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const setDeleteProduct = async (id) => {
+    try {
+      const res = await updateMyProduct({isDelete:true },id)
+      console.log(res.data)
+      setChange(!isChange);
+      info("Prdoucted is Deleted !")
     } catch (error) {
       console.log(error)
     }
@@ -70,8 +101,11 @@ const ViewProducts = () => {
   useEffect(() => {
     getproductsForVender()
     getDraftproductsForVender()
-  }, [])
+  }, [isChange])
 
+  const info = (msg) => {
+    messageApi.info(msg);
+  };
   const onChange = (key) => {
     console.log(key);
   };
@@ -88,32 +122,33 @@ const ViewProducts = () => {
     }
   ];
 
-  const handelEdit=(record)=>{
+  const handelEdit = (record) => {
     // console.log(record)
     setRecord(record);
     setModalOpen(true)
   }
 
-  
+
 
 
 
 
   return (
 
-      <div>
-        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-        <Modal
-                title="Add Products"
-                style={{ top: 0 }}
-                width={700}
-                open={modalOpen}
-                onOk={() => setModalOpen(false)}
-                onCancel={() => setModalOpen(false)}
-            >
-              <ProductForm data={rec} update={true} />
-            </Modal>
-      </div>
+    <div>
+      {contextHolder}
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      <Modal
+        title="Add Products"
+        style={{ top: 0 }}
+        width={700}
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+      >
+        <ProductForm data={rec} update={true} />
+      </Modal>
+    </div>
   )
 }
 
